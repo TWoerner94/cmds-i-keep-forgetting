@@ -1,3 +1,6 @@
+# CME
+crackmapexec smb $IP -u $USER -p $PASS -M spider_plus -> crawl available shares
+
 # DNS
 dnsrecon -r $RANGE -n $NAMESERVER -> enumerate DNS
 dnsrecon -d $DOMAIN -t axfr -> try zone transfer
