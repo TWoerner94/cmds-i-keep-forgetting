@@ -11,6 +11,7 @@ davtest -e $IP -> perform basic enumeration
 # LDAP
 ldapsearch -x -h $IP -s base namingcontexts -> enumerate basic domain info
 ldapsearch -x -h $IP -s sub -b '$QUERY' -> list tree
+cat $DUMPFILE | awk '{print $1}' | sort | uniq -c | sort -nr -> grab anomalies
 
 # NETCAT
 nc -nv $IP $PORT -q 0 < $FILE -> terminate automatically after file transfer completes
