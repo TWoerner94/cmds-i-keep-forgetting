@@ -9,7 +9,8 @@ host -l $DOMAIN $NAMESERVER -> try zone transfer
 davtest -e $IP -> perform basic enumeration
 
 # LDAP
-ldapsearch -x -h $IP -s base namingcontexts
+ldapsearch -x -h $IP -s base namingcontexts -> enumerate basic domain info
+ldapsearch -x -h $IP -s sub -b '$QUERY' -> list tree
 
 # NETCAT
 nc -nv $IP $PORT -q 0 < $FILE -> terminate automatically after file transfer completes
